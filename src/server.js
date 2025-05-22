@@ -17,7 +17,17 @@ const item_1 = __importDefault(require("./routes/item"));
 const sale_1 = __importDefault(require("./routes/sale"));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
-app.use((0, cors_1.default)());
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header("Access-Control-Allow-Origin", '*');
+    next();
+});
+app.use((0, cors_1.default)({
+    origin: '*',
+    methods: '*',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+}));
 app.use('/api/user', user_1.default);
 app.use('/api/client', client_1.default);
 app.use('/api/auth', auth_1.default);
